@@ -1,0 +1,6 @@
+sa-credentials.json
+*.jsonl
+*.pkl
+*.index
+*.tmp
+.env
