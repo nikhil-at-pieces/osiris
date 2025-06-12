@@ -4,3 +4,4 @@ sa-credentials.json
 *.index
 *.tmp
 .env
+.streamlit/secrets.toml

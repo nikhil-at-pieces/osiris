@@ -1,6 +1,25 @@
 #!/usr/bin/env python3
+#!/usr/bin/env python3
 import streamlit as st
 from ask_osiris import answer_question
+
+# --- Google Cloud Auth Setup ---
+from google.oauth2 import service_account
+from google.auth.transport.requests import Request
+from vertexai import aiplatform  # If you're using Vertex AI (optional)
+import os
+
+# Load credentials from Streamlit secrets
+creds_info = st.secrets["google_credentials"]
+creds = service_account.Credentials.from_service_account_info(creds_info)
+creds.refresh(Request())
+
+# Optional: Initialize Vertex AI client (if used inside `answer_question`)
+aiplatform.init(
+    credentials=creds,
+    project=creds_info["project_id"],
+    location="us-central1"  # Or whatever region you're using
+)
 
 # --- Page Config ---
 st.set_page_config(
@@ -8,6 +27,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed"
 )
+
 
 # --- Initialize session state ---
 if "messages" not in st.session_state:
